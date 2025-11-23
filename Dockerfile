@@ -6,7 +6,7 @@ FROM runpod/pytorch:2.1.0-py3.10-cuda11.8.0-devel-ubuntu22.04
 # Set working directory
 WORKDIR /workspace
 
-# Install system dependencies
+# Install system dependencies including build tools
 RUN apt-get update && apt-get install -y \
     git \
     ffmpeg \
@@ -16,6 +16,9 @@ RUN apt-get update && apt-get install -y \
     libgomp1 \
     wget \
     curl \
+    build-essential \
+    python3-dev \
+    libopencv-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Clone MuseTalk repository
@@ -24,7 +27,8 @@ RUN git clone https://github.com/TMElyralab/MuseTalk.git /workspace/MuseTalk
 WORKDIR /workspace/MuseTalk
 
 # Install Python dependencies
-RUN pip install --no-cache-dir --upgrade pip && \
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
+    pip install --no-cache-dir numpy scipy cython && \
     pip install --no-cache-dir -r requirements.txt && \
     pip install --no-cache-dir runpod boto3 requests huggingface_hub && \
     pip install --no-cache-dir openmim && \
