@@ -26,7 +26,9 @@ WORKDIR /workspace/MuseTalk
 # Install Python dependencies
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt && \
-    pip install --no-cache-dir runpod boto3 requests huggingface_hub
+    pip install --no-cache-dir runpod boto3 requests huggingface_hub && \
+    pip install --no-cache-dir openmim && \
+    mim install mmengine "mmcv>=2.0.0" "mmdet>=3.0.0" "mmpose>=1.0.0"
 
 # Download model weights from HuggingFace
 RUN python3 -c "from huggingface_hub import snapshot_download; \
