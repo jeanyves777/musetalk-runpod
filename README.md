@@ -92,12 +92,12 @@ Click "Create Endpoint"
 - Docker Image: `flowsmartly/musetalk-runpod:latest`
 - GPU Types: RTX 3090, RTX 4090, A40, A6000
 
-**Scaling**:
-- Workers Min: `1` (always-on for zero cold start)
+**Scaling** (On-Demand):
+- Workers Min: `0` (no idle workers = $0 cost when idle)
 - Workers Max: `5`
 - Scaler Type: `REQUEST_COUNT`
 - Scaler Value: `1`
-- Idle Timeout: `120` seconds
+- Idle Timeout: `10` seconds (workers shut down after 10 sec idle)
 
 **Execution**:
 - Execution Timeout: `900000` ms (15 minutes)
