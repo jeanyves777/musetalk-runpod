@@ -1,5 +1,7 @@
 # MuseTalk Production Deployment for RunPod
 
+**Version 1.1** - Fixed mmpose dependencies
+
 ## 🎯 What This Is
 
 A production-ready **MuseTalk** avatar video generation system for RunPod Serverless:
