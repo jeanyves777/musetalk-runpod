@@ -31,9 +31,12 @@ WORKDIR /workspace/MuseTalk
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
     pip install --no-cache-dir numpy scipy cython
 
-# Install mmpose dependencies BEFORE requirements.txt to control versions
-RUN pip install --no-cache-dir openmim && \
-    mim install mmengine "mmcv>=2.0.0" "mmdet>=3.0.0" "mmpose>=1.0.0"
+# Install mmpose dependencies directly with pip (avoid mim build issues)
+RUN pip install --no-cache-dir \
+    mmengine \
+    mmcv>=2.0.1 \
+    mmdet>=3.0.0 \
+    mmpose>=1.0.0
 
 # Now install MuseTalk requirements (may upgrade some packages)
 RUN pip install --no-cache-dir -r requirements.txt || echo "Some requirements may have failed, continuing..."
