@@ -1,5 +1,6 @@
 # MuseTalk Production Dockerfile for RunPod Serverless
 # High-quality real-time avatar video generation
+# Version: 1.1 - Fixed mmpose dependencies
 
 FROM runpod/pytorch:2.1.0-py3.10-cuda11.8.0-devel-ubuntu22.04
 
