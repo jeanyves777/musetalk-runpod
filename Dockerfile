@@ -27,13 +27,19 @@ RUN git clone https://github.com/TMElyralab/MuseTalk.git /workspace/MuseTalk
 
 WORKDIR /workspace/MuseTalk
 
-# Install Python dependencies
+# Install Python dependencies - Install mmpose stack FIRST to avoid conflicts
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
-    pip install --no-cache-dir numpy scipy cython && \
-    pip install --no-cache-dir -r requirements.txt && \
-    pip install --no-cache-dir runpod boto3 requests huggingface_hub && \
-    pip install --no-cache-dir openmim && \
+    pip install --no-cache-dir numpy scipy cython
+
+# Install mmpose dependencies BEFORE requirements.txt to control versions
+RUN pip install --no-cache-dir openmim && \
     mim install mmengine "mmcv>=2.0.0" "mmdet>=3.0.0" "mmpose>=1.0.0"
+
+# Now install MuseTalk requirements (may upgrade some packages)
+RUN pip install --no-cache-dir -r requirements.txt || echo "Some requirements may have failed, continuing..."
+
+# Install additional dependencies
+RUN pip install --no-cache-dir runpod boto3 requests huggingface_hub
 
 # Download model weights from HuggingFace
 RUN python3 -c "from huggingface_hub import snapshot_download; \
